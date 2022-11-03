@@ -2,7 +2,6 @@ import cv2
 import socket
 import rutil
 from threading import Thread
-from pickle import dumps
 from time import sleep
 
 
