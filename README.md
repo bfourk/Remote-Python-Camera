@@ -1,15 +1,17 @@
 # Remote-Python-Camera
 A bodge to send a webcam video over the network
 
-Required packages:
-opencv-python
-tk
-pillow
+<b>NOTE: this was simply a 1-day bodge I needed to get a remote camera feed. It is buggy and unfinished, and should not be used in a production-like environment.</b>
 
-Arguments:
-./main.py
-  -s --server | run as server
-  --passwd    | set a password for the server
+Required Packages:  
+tk  
+opencv-python  
+pillow  
+
+# Arguments:
+./main.py  
+  -s --server | run as server  
+  --passwd    | set a password for the server  
 
 when running as server:
 it will automatically open a socket server listening at the specified listen port and listen address (rserver.py, line 9,10)
