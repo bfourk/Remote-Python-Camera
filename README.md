@@ -1,5 +1,5 @@
 # Remote-Python-Camera
-A bodge to send a webcam video over the network
+A bodge to send a video feed over the network
 
 <b>NOTE: this was simply a 1-day bodge I needed to get a remote camera feed. It is buggy and unfinished, and should not be used in a production-like environment.</b>
 
