@@ -1,7 +1,6 @@
 import zlib
 
-# Compression
-
+# Variable to enable compression
 doCompression = True
 
 def ZLibCompress(data):
