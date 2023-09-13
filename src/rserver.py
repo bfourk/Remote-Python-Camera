@@ -21,7 +21,7 @@ This is the picture that is sent to clients when requested
 """
 def ServerImageLoop():
 	global serverImage
-	cam = cv2.VideoCapture(1)
+	cam = cv2.VideoCapture(0)
 
 	while True:
 		s,frame = cam.read()
