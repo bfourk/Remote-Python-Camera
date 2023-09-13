@@ -40,8 +40,6 @@ def OnSocketConn(accepted):
 
 	if serverPassword != None:
 		attemptedPassword = ClientSock.recvall().decode()
-		print(attemptedPassword)
-		print(serverPassword)
 		if attemptedPassword == serverPassword:
 			ClientSock.sendall("1")
 		else:
