@@ -3,10 +3,12 @@ import socket
 import rutil
 from threading import Thread
 from time import sleep
+from hashlib import sha512
 
+Framerate = 20
 
 listenAddr = "0.0.0.0"
-listenPort = 23421
+listenPort = 23422
 
 # Do not edit the variables below
 
@@ -19,7 +21,7 @@ This is the picture that is sent to clients when requested
 """
 def ServerImageLoop():
 	global serverImage
-	cam = cv2.VideoCapture(0)
+	cam = cv2.VideoCapture(1)
 
 	while True:
 		s,frame = cam.read()
@@ -29,7 +31,7 @@ def ServerImageLoop():
 			break
 		frame = cv2.imencode(".jpg",frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50])[1].tobytes()
 		serverImage = frame
-		sleep(1/20) # 20 fps
+		sleep(1/Framerate) # 1/framerate
 
 def OnSocketConn(accepted):
 	print("Client Connected")
@@ -38,11 +40,15 @@ def OnSocketConn(accepted):
 
 	if serverPassword != None:
 		attemptedPassword = ClientSock.recvall().decode()
+		print(attemptedPassword)
+		print(serverPassword)
 		if attemptedPassword == serverPassword:
 			ClientSock.sendall("1")
 		else:
 			sleep(1)
 			ClientSock.sendall("0")
+			ClientSock.close()
+			return
 
 	if ClientSock.recvall().decode() != "!":
 		print("Handshake Failed")
@@ -50,9 +56,14 @@ def OnSocketConn(accepted):
 
 	print("Handshake Success")
 	while True:
-		ClientSock.sendall(serverImage)
-		ClientSock.recvall() # wait for client response before sending another image
-		sleep(1/20) # wait 1/20th of a second
+		try:
+			ClientSock.sendall(serverImage)
+			ClientSock.recvall() # wait for client response before sending another image
+		except:
+			print("Client disconnected")
+			ClientSock.close()
+			del ClientSock
+			break
 
 def ServerSocketLoop():
 	ServerSocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -65,7 +76,8 @@ def ServerSocketLoop():
 
 def run(passwd):
 	global serverPassword
-	serverPassword = passwd
+	if passwd and len(passwd) != 0:
+		serverPassword = sha512(str(passwd).encode()).hexdigest()
 	Thread(target = ServerImageLoop, args = ()).start()
 	ServerSocketLoop()
 	exit(0)

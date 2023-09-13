@@ -2,7 +2,7 @@ import zlib
 
 # Compression
 
-doCompression = False # this is currently broken. I have no idea why.
+doCompression = True
 
 def ZLibCompress(data):
 	return zlib.compress(data)
@@ -25,6 +25,8 @@ class SimpleSocket:
 		self.sock = socket
 
 	def sendall(self,data):
+		if not self.sock:
+			return
 		if type(data) is str:
 			data = data.encode()
 		if data == None:
@@ -40,6 +42,8 @@ class SimpleSocket:
 			exit(1)
 
 	def recvall(self):
+		if not self.sock:
+			return
 		data = b""
 		dataLength = ByteToInt(self.sock.recv(4)) # receive the (4 byte) integer
 		while True:
@@ -53,6 +57,9 @@ class SimpleSocket:
 			except:
 				print("Exception on data receive")
 				exit(1)
+	def close(self):
+		self.sock.close()
+		del self.sock
 
 # Input Sanitization
 
