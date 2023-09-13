@@ -8,7 +8,7 @@ from hashlib import sha512
 Framerate = 20
 
 listenAddr = "0.0.0.0"
-listenPort = 23422
+listenPort = 23421
 
 # Do not edit the variables below
 
