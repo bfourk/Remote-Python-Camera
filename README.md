@@ -4,7 +4,7 @@ A bodge to send a video feed over the network
 <b>NOTE: this was simply a 1-day bodge I needed to get a remote camera feed. It is buggy and unfinished.</b>
 
 Required Packages:  
-tk  
+tk  (also requires the package python3-tk on raspbian headless)
 opencv-python  
 pillow  
 
