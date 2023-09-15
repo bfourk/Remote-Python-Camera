@@ -1,10 +1,10 @@
 # Remote-Python-Camera
 A bodge to send a video feed over the network
 
-<b>NOTE: this was simply a 1-day bodge I needed to get a remote camera feed. It is buggy and unfinished.</b>
+<b>NOTE: this was simply a 1-day bodge I needed to get a remote camera feed. It is buggy and unfinished.<br>In my testing, this does not work with raspberry pi camera modules on aarch64 Raspbian.</b>
 
 Required Packages:<br>
-<b>python3-tk on raspbian headless</b><br>
+<b>python3-tk on Debian Bookworm</b><br>
 tk<br>
 opencv-python<br>
 pillow<br>
