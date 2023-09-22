@@ -15,7 +15,7 @@ pillow<br>
   --passwd    | set a password for the server  
 
 when running as server:
-it will automatically open a socket server listening at the specified listen port and listen address (rserver.py, line 9,10)
+it will automatically open a socket server listening at the specified listen port and listen address (rserver.py, line 10,11)
 
 when running as client:
 it will ask for an IP and a port, and if the server is password protected, a password. After inputted, a window will open showing the camera stream.
