@@ -29,7 +29,6 @@ camStream = BytesIO()
 
 def ServerImageLoop():
 	global serverImage
-	#cam = cv2.VideoCapture(0)
 	while True:
 		ay = piCam.capture_array("main")
 		frame = cv2.imencode(".jpg", ay, [int(cv2.IMWRITE_JPEG_QUALITY), 50])[1].tobytes()
