@@ -41,7 +41,8 @@ ClientSimple.sendall("!")
 def recvImage():
 	global clientImg
 	img = ClientSimple.recvall()
-	clientImg = Image.open(BytesIO(img))
+	imgIO = BytesIO(img)
+	clientImg = Image.open(imgIO)
 	ClientSimple.sendall("!")
 
 def ImageRecvLoop():

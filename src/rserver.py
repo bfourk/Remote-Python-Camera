@@ -4,6 +4,8 @@ import rutil
 from threading import Thread
 from time import sleep
 from hashlib import sha512
+from io import BytesIO
+from picamera2 import Picamera2
 
 Framerate = 20
 
@@ -19,17 +21,18 @@ serverImage = None # image from webcam
 Constantly updates the "serverImage" variable with an image from the webcam
 This is the picture that is sent to clients when requested
 """
+
+piCam = Picamera2()
+piCam.configure(piCam.create_preview_configuration({'format': 'RGB888'}))
+piCam.start()
+camStream = BytesIO()
+
 def ServerImageLoop():
 	global serverImage
-	cam = cv2.VideoCapture(0)
-
+	#cam = cv2.VideoCapture(0)
 	while True:
-		s,frame = cam.read()
-		if not s:
-			print("ERROR: Failed to grab frame from camera, exiting")
-			exit(1)
-			break
-		frame = cv2.imencode(".jpg",frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50])[1].tobytes()
+		ay = piCam.capture_array("main")
+		frame = cv2.imencode(".jpg", ay, [int(cv2.IMWRITE_JPEG_QUALITY), 50])[1].tobytes()
 		serverImage = frame
 		sleep(1/Framerate) # 1/framerate
 
