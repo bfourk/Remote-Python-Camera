@@ -15,10 +15,12 @@ ClientSock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 IP = input("Input IP: ")
 Port = rutil.GetPort("Input Port [23421]: ", 23421)
 
+print("Connecting")
+
 ClientSock.connect((IP,Port))
 ClientSimple = rutil.SimpleSocket(ClientSock)
 
-print("Connecting")
+print("Connected to Host Successfully")
 
 handshakeData = ClientSimple.recvall().decode()
 
