@@ -43,7 +43,11 @@ ClientSimple.sendall("!")
 def recvImage():
 	global clientImg
 	img = ClientSimple.recvall()
-	clientImg = Image.open(BytesIO(img))
+	imgIO = BytesIO(img)
+	try:
+		clientImg = Image.open(imgIO)
+	except:
+		print("Bad image received, ignoring.")
 	ClientSimple.sendall("!")
 
 def ImageRecvLoop():
