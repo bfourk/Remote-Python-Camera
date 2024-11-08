@@ -7,7 +7,7 @@ from PIL import Image, ImageTk, ImageFile
 from io import BytesIO
 from hashlib import sha512
 
-
+Minimized = False
 clientImg = None # image from server
 Closed = False
 ClientSock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -41,6 +41,8 @@ print("Connected")
 ClientSimple.sendall("!")
 
 def recvImage():
+	if Minimized:
+		return
 	global clientImg
 	img = ClientSimple.recvall()
 	imgIO = BytesIO(img)
@@ -69,6 +71,7 @@ def onClose(a):
 	exit(0)
 
 def run():
+	global Minimized
 	win = tkinter.Tk()
 	win.geometry("1920x1080")
 	win.title("Pi Camera")
@@ -84,6 +87,7 @@ def run():
 
 	while True:
 		sleep(0.01)
+		Minimized = (win.state() == "iconic")
 		if Closed:
 			break
 		if clientImg == None:
